@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { X, Target } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
-import { Goal } from '../../types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createGoal } from '../../services/Goals/goals';
+import { useGoal } from '../../hooks/useGoal';
+import { Goal } from '../../types';
 
 interface AddGoalModalProps {
   isOpen: boolean;
@@ -21,29 +22,30 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose }) => {
     category: ''
   });
   const queryClient = useQueryClient();
+  const { addGoal } = useGoal();
 
-  const mutation = useMutation({
-    mutationFn: (newTx: Omit<Goal, "id">) => createGoal(newTx),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["goals"] });
-      setFormData({
-        title: '',
-        description: '',
-        targetAmount: '',
-        currentAmount: '',
-        targetDate: '',
-        category: ''
-      })
+  // const mutation = useMutation({
+  //   mutationFn: (newTx: Omit<Goal, "id">) => createGoal(newTx),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["goals"] });
+  //     setFormData({
+  //       title: '',
+  //       description: '',
+  //       targetAmount: '',
+  //       currentAmount: '',
+  //       targetDate: '',
+  //       category: ''
+  //     })
 
-    },
-  });
+  //   },
+  // });
 
   const categories = [
     'Emergency', 'Travel', 'Transportation', 'Home', 'Education',
     'Investment', 'Retirement', 'Healthcare', 'Entertainment', 'Other'
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const  handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.title || !formData.targetAmount || !formData.targetDate || !formData.category) {
@@ -59,12 +61,9 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose }) => {
       category: formData.category
     };
 
-    mutation.mutate(newGoal);
-
-    // dispatch({ type: 'ADD_GOAL', payload: newGoal });
-
-    // Reset form and close modal
-    setFormData({
+    try {
+      await addGoal(newGoal);
+      setFormData({
       title: '',
       description: '',
       targetAmount: '',
@@ -73,6 +72,19 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose }) => {
       category: ''
     });
     onClose();
+      
+    } catch (error) {
+
+      console.error('Error adding goal:', error);
+      
+    }
+
+    // mutation.mutate(newGoal);
+
+    // dispatch({ type: 'ADD_GOAL', payload: newGoal });
+
+    // Reset form and close modal
+    
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

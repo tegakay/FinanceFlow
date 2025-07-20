@@ -2,16 +2,12 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from '../../services/Transactions/transactions';
-import { Transaction } from '../../types';
+
+import { useTransactions } from '../../hooks/useTransaction';
 
 const RecentTransactions = () => {
   const { state } = useFinance();
-  const { data, isLoading, isError } = useQuery<Transaction[]>({
-      queryKey: ["recent-transactions"],
-      queryFn: fetchTransactions,
-    });
+    const { transactions,isLoading,isError } = useTransactions();
     if (isLoading) {
       return (
         <div className="flex justify-center items-center py-10">
@@ -29,7 +25,7 @@ const RecentTransactions = () => {
       );
     }
 
-  const recentTransactions = data?.slice(0, 5) || [];
+  const recentTransactions = transactions?.slice(0, 5) || [];
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {

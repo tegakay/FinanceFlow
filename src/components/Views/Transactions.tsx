@@ -5,6 +5,7 @@ import AddTransactionModal from '../Modals/AddTransactionModal';
 import { fetchTransactions } from '../../services/Transactions/transactions';
 import { useQuery } from "@tanstack/react-query";
 import { Transaction } from '../../types';
+import { useTransactions } from '../../hooks/useTransaction';
 
 const Transactions = () => {
   const { state } = useFinance();
@@ -13,13 +14,10 @@ const Transactions = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const categories = ['all', ...Array.from(new Set(state.transactions.map(t => t.category)))];
+  const { transactions,isLoading,isError } = useTransactions();
 
-  // Fetch transactions using react-query
-
-  const { data, isLoading, isError } = useQuery<Transaction[]>({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
-  });
+  
+  const data = transactions
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-10">

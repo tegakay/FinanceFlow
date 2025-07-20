@@ -36,7 +36,6 @@ const Sidebar = () => {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { id: 'transactions', label: 'Transactions', icon: CreditCard, path: '/transactions' },
     { id: 'budget', label: 'Budget', icon: PieChart, path: '/budget' },
-    { id: 'investments', label: 'Investments', icon: TrendingUp, path: '/investments' },
     { id: 'goals', label: 'Goals', icon: Target, path: '/goals' },
     { id: 'profile', label: 'Profile', icon: User, path: '/profile' }
   ];

@@ -5,10 +5,12 @@ import AddGoalModal from '../Modals/AddGoalModal';
 import { useQuery } from "@tanstack/react-query";
 import { fetchGoals } from '../../services/Goals/goals';
 import { Goal } from '../../types';
+import { useGoal } from '../../hooks/useGoal';
 
 const Goals = () => {
   const { state } = useFinance();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const { goalsData,isError,isLoading } = useGoal();
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -41,10 +43,10 @@ const Goals = () => {
     return 'bg-red-500';
   };
 
-  const { data, isLoading, isError } = useQuery<Goal[]>({
-    queryKey: ["goals"],
-    queryFn: fetchGoals,
-  });
+  // const { data, isLoading, isError } = useQuery<Goal[]>({
+  //   queryKey: ["goals"],
+  //   queryFn: fetchGoals,
+  // });
 
   if (isLoading) {
     return (
@@ -63,7 +65,7 @@ const Goals = () => {
     );
   }
 
-  if(!data || data?.length === 0) {
+  if(!goalsData || goalsData?.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full space-y-4">
         <div className="text-gray-500 text-sm">No financial goals found.</div>  
@@ -86,7 +88,7 @@ const Goals = () => {
       totalTargetAmount,
     };
   }
-  let goal_info = sumGoals(data);
+  let goal_info = sumGoals(goalsData);
 
   return (
     <div className="space-y-6">
@@ -124,7 +126,7 @@ const Goals = () => {
           </div>
           <p className={`text-2xl font-bold ${state.user.theme === 'dark' ? 'text-white' : 'text-gray-900'
             }`}>
-            {data?.length}
+            {goalsData?.length}
           </p>
           <p className={`text-sm mt-1 ${state.user.theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
             }`}>
@@ -180,7 +182,7 @@ const Goals = () => {
       </div>
 
       <div className="space-y-6">
-        {data.map((goal) => {
+        {goalsData.map((goal) => {
           const progress = (goal.current_amount / goal.target_amount) * 100;
           const remaining = goal.target_amount - goal.current_amount;
           const daysUntil = getDaysUntilTarget(goal.target_date);

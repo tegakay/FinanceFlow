@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { FinanceProvider } from './contexts/FinanceContext';
 import LoginPage from './components/Auth/LoginPage';
@@ -11,6 +11,7 @@ import Investments from './components/Views/Investments';
 import Goals from './components/Views/Goals';
 import Profile from './components/Views/Profile';
 import { useAuth } from './contexts/AuthContext';
+import { Toaster } from "react-hot-toast";
 
 const AuthenticatedApp = () => {
   return (
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <Router>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {user ? (
           <Route path="/*" element={<AuthenticatedApp />} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, TrendingUp, ArrowRight, Shield, Zap, BarChart3 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import toast from "react-hot-toast";
 
 interface LoginPageProps {
   onLogin?: () => void;
@@ -23,12 +24,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     
     try {
       const result = await signIn(formData.email, formData.password);
-
-      if (result?.success) {
+debugger
+      if (result?.data?.session) {
+        toast.success("Logged in successfully!");
         navigate('/dashboard')
 
+      } else{
+        toast.error("Login failed " );
       }
-      // chore handle wrong username or password
+     
 
     } catch (error) {
       console.error('Signup error:', error);

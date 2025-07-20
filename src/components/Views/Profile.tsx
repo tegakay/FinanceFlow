@@ -1,9 +1,39 @@
-import React from 'react';
-import { User, Mail, DollarSign, Bell, Shield, Settings } from 'lucide-react';
+
+import { User, Mail, DollarSign, Bell, Shield, Settings,Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
+
+
+import { useUser } from '../../hooks/useUser';
+
 
 const Profile = () => {
   const { state } = useFinance();
+ 
+
+
+
+    const { userData:data, isLoading, isError } = useUser();
+    
+
+    if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="text-gray-500 text-sm">Loading Profile...</div>
+      </div>
+    )
+  }
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="text-red-500 bg-red-50 px-4 py-2 rounded border border-red-200 text-sm">
+          Failed to load Profile. Please try again.
+        </div>
+      </div>
+    );
+  }
+
+console.log('Profile Data:', data);
+  
 
   return (
     <div className="space-y-6">
@@ -34,7 +64,25 @@ const Profile = () => {
                 <label className={`block text-sm font-medium mb-2 ${
                   state.user.theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                 }`}>
-                  Full Name
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={state.user.name}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    state.user.theme === 'dark'
+                      ? 'bg-gray-700 border-gray-600 text-white'
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
+                  readOnly
+                />
+              </div>
+
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${
+                  state.user.theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                  Last Name
                 </label>
                 <input
                   type="text"
@@ -86,6 +134,14 @@ const Profile = () => {
                   <option value="CAD">CAD - Canadian Dollar</option>
                 </select>
               </div>
+
+              <button
+                            type="submit"
+                            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+                        >
+                            <Plus className="w-4 h-4" />
+                            <span>Update</span>
+                        </button>
             </div>
           </div>
 

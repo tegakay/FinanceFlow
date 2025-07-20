@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import { Monthly_Budget } from '../../types';
-import { createTransaction } from '../../services/Transactions/transactions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { upsertBudget } from '../../services/Budgets/budgets';
 
@@ -12,7 +11,7 @@ interface AddBudgetModalProps {
 }
 
 const AddBudgetModal: React.FC<AddBudgetModalProps> = ({ isOpen, onClose }) => {
-    const { state, dispatch } = useFinance();
+    const { state } = useFinance();
     const [formData, setFormData] = useState({
         income: '',
         food: '',

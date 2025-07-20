@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
-import { Transaction } from '../../types';
-import { createTransaction } from '../../services/Transactions/transactions';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Transaction } from '../../types'; 
+import { useTransactions } from '../../hooks/useTransaction';
 
 interface AddTransactionModalProps {
   isOpen: boolean;
@@ -20,23 +19,9 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
     accountId: state.accounts[0]?.id || '',
     date: new Date().toISOString().split('T')[0]
   });
-  const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: (newTx: Omit<Transaction, "id">) => createTransaction(newTx),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      setFormData({
-        description: '',
-        amount: '',
-        category: '',
-        type: 'Expense' as 'Income' | 'Expense',
-        accountId: state.accounts[0]?.id || '',
-        date: new Date().toISOString().split('T')[0]
-      })
-
-    },
-  });
+  const { addTransaction } = useTransactions();
+  
 
   const categories = [
     'Food', 'Transportation', 'Utilities', 'Entertainment', 'Shopping',
@@ -60,7 +45,23 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
       account: formData.accountId
     };
 
-    mutation.mutate(newTransaction);
+    // mutation.mutate(newTransaction);
+    
+    try {
+      await addTransaction(newTransaction);
+      setFormData({
+        description: '',
+        amount: '',
+        category: '',
+        type: 'Expense' as 'Income' | 'Expense',
+        accountId: state.accounts[0]?.id || '',
+        date: new Date().toISOString().split('T')[0]
+      })
+
+    } catch (error) {
+      console.log('Error adding transaction:', error);
+    }
+
 
     
 
