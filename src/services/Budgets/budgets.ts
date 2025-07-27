@@ -1,4 +1,4 @@
-import { Monthly_Budget } from "../../types";
+import { budget_entry, Monthly_Budget } from "../../types";
 import { supabase } from "../../libs/supabaseClient";
 import { fetchTransactions } from "../Transactions/transactions";
 
@@ -40,13 +40,25 @@ export async function getCurrentUserBudgets() {
     .select("*")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
-    .single();
+    .maybeSingle();
 
-  console.error("me", data);
+ 
 
   if (error) {
     console.error("Error fetching budgets:", error);
     return null;
+  }
+
+  if(!data) {
+    return {
+    "id": "0",
+    "user_id": "x",
+    "monthly_income": 0,
+    "food": 0,
+    "transportation": 0,
+    "utilities": 0,
+    "entertainment": 0
+}
   }
 
   return data;
@@ -71,7 +83,7 @@ export async function getBudgetDataForCurrentMonth() {
   const utilities_budget = (Number(utilities) / 100) * Number(monthly_income);
   const entertainment_budget =
     (Number(entertainment) / 100) * Number(monthly_income);
-    let data = [];
+    let data:budget_entry[] = [];
 
   try {
     const userId = (await supabase.auth.getUser()).data.user?.id;
@@ -100,7 +112,7 @@ export async function getBudgetDataForCurrentMonth() {
       total_remaning,
       Expenses,
       monthly_income,
-      'data_raw':data,
+      data_raw:data,
     };
     
   } catch (error) {
@@ -111,7 +123,7 @@ export async function getBudgetDataForCurrentMonth() {
       total_remaning,
       Expenses,
       monthly_income,
-      'data_raw':data,
+      data_raw:data,
     };
   
 }

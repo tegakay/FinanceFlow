@@ -2,8 +2,8 @@ import  { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import { Monthly_Budget } from '../../types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { upsertBudget } from '../../services/Budgets/budgets';
+import toast from "react-hot-toast";
+import { useBudget } from '../../hooks/useBudget';
 
 interface AddBudgetModalProps {
     isOpen: boolean;
@@ -20,28 +20,29 @@ const AddBudgetModal: React.FC<AddBudgetModalProps> = ({ isOpen, onClose }) => {
         entertainment: '',
         id: ''
     });
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
+    const {addBudget} = useBudget();
 
-    const mutation = useMutation({
-        mutationFn: (newTx: Omit<Monthly_Budget, "id">) => upsertBudget(newTx),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["budget"] });
-            setFormData({
-                income: '',
-                food: '',
-                transportation: '',
-                utilities: '',
-                entertainment: '',
-                id: ''
-            })
+    // const mutation = useMutation({
+    //     mutationFn: (newTx: Omit<Monthly_Budget, "id">) => upsertBudget(newTx),
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries({ queryKey: ["budget"] });
+    //         setFormData({
+    //             income: '',
+    //             food: '',
+    //             transportation: '',
+    //             utilities: '',
+    //             entertainment: '',
+    //             id: ''
+    //         })
 
-        },
-    });
+    //     },
+    // });
 
-    const categories = [
-        'Food', 'Transportation', 'Utilities', 'Entertainment', 'Shopping',
-        'Healthcare', 'Education', 'Travel', 'Salary', 'Investments', 'Other'
-    ];
+    // const categories = [
+    //     'Food', 'Transportation', 'Utilities', 'Entertainment', 'Shopping',
+    //     'Healthcare', 'Education', 'Travel', 'Salary', 'Investments', 'Other'
+    // ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -75,17 +76,9 @@ const AddBudgetModal: React.FC<AddBudgetModalProps> = ({ isOpen, onClose }) => {
             
         };
 
-        mutation.mutate(Budget);
-
-
-
-        // dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });
-
-        // Update account balance
-
-
-        // Reset form and close modal
-        setFormData({
+        try {
+            await addBudget(Budget);
+            setFormData({
             income: '',
             food: '',
             transportation: '',
@@ -95,6 +88,25 @@ const AddBudgetModal: React.FC<AddBudgetModalProps> = ({ isOpen, onClose }) => {
            
         });
         onClose();
+            
+        } catch (error) {
+            console.error('Error adding budget:', error);
+            toast.error("Failed to add budget. Please try again.");
+            return;
+            
+        }
+
+        // mutation.mutate(Budget);
+
+
+
+        // dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });
+
+        // Update account balance
+
+
+        // Reset form and close modal
+        
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

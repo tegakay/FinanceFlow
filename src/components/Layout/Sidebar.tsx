@@ -18,7 +18,7 @@ const Sidebar = () => {
   const { state, dispatch } = useFinance();
   const location = useLocation();
   const navigate = useNavigate();
-  const {user,signOut} = useAuth();
+  const {signOut} = useAuth();
 
   const  handleLogout = async(e: React.MouseEvent) => {
     e.preventDefault();

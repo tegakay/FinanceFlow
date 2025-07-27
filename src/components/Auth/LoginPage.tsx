@@ -24,7 +24,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     
     try {
       const result = await signIn(formData.email, formData.password);
-debugger
+
       if (result?.data?.session) {
         toast.success("Logged in successfully!");
         navigate('/dashboard')

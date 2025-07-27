@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { TrendingUp, TrendingDown, DollarSign, BarChart3 } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 

@@ -3,8 +3,8 @@ import { PieChart, TrendingUp, AlertTriangle, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import { useState } from 'react';
 import AddBudgetModal from '../Modals/AddBudgetModal';
-
 import { useBudget } from '../../hooks/useBudget';
+
 import { budget_entry } from '../../types';
 
 
@@ -35,12 +35,14 @@ const Budget = () => {
 
 
   // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["budget"],
+  //   queryKey: ["budget2"],
   //   queryFn: getBudgetDataForCurrentMonth,
   // });
+  
   const { budgetData, isError, isLoading } = useBudget();
+  
 
-  //  console.error('data',data)
+  //  console.error('data',data,isError);
 
 
   if (isLoading) {

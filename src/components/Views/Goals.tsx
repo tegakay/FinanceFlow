@@ -2,8 +2,6 @@ import  { useState } from 'react';
 import { Target, Calendar, TrendingUp, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import AddGoalModal from '../Modals/AddGoalModal';
-import { useQuery } from "@tanstack/react-query";
-import { fetchGoals } from '../../services/Goals/goals';
 import { Goal } from '../../types';
 import { useGoal } from '../../hooks/useGoal';
 
@@ -65,13 +63,7 @@ const Goals = () => {
     );
   }
 
-  if(!goalsData || goalsData?.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full space-y-4">
-        <div className="text-gray-500 text-sm">No financial goals found.</div>  
-        </div>
-    );
-  }
+ 
 
   
   function sumGoals(goals: Goal[]) {
@@ -182,7 +174,13 @@ const Goals = () => {
       </div>
 
       <div className="space-y-6">
-        {goalsData.map((goal) => {
+        {(!goalsData || goalsData.length === 0) && (
+          <div className="flex flex-col items-center justify-center h-full space-y-4">
+        <div className="text-gray-500 text-sm">No financial goals found.</div>  
+        </div>
+
+        )}
+        {goalsData && goalsData.map((goal) => {
           const progress = (goal.current_amount / goal.target_amount) * 100;
           const remaining = goal.target_amount - goal.current_amount;
           const daysUntil = getDaysUntilTarget(goal.target_date);

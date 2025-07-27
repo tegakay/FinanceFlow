@@ -19,6 +19,13 @@ export interface User {
   updated_at?: string;
 }
 
+export interface budget_entry {
+    category: string,
+    total_expense: number,
+    budget_allocated: number,
+    id: number
+}
+
 export interface Monthly_Budget {
   id: string;
   monthly_income: string;

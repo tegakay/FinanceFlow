@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { X, Target } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createGoal } from '../../services/Goals/goals';
+import {  useQueryClient } from '@tanstack/react-query';
+
 import { useGoal } from '../../hooks/useGoal';
 import { Goal } from '../../types';
+import toast from "react-hot-toast";
 
 interface AddGoalModalProps {
   isOpen: boolean;

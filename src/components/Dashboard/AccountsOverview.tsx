@@ -1,8 +1,8 @@
 
-import { CreditCard, Wallet, TrendingUp, Minus } from 'lucide-react';
+import { CreditCard, Wallet, TrendingUp } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
-import { useQuery } from '@tanstack/react-query';
-import { getBudgetDataForCurrentMonth } from '../../services/Budgets/budgets';
+import { useBudget } from '../../hooks/useBudget';
+import { budget_entry } from '../../types';
 
 
 const AccountsOverview = () => {
@@ -23,10 +23,13 @@ const AccountsOverview = () => {
     }
   };
 
-    const { data, isLoading, isError } = useQuery({
-      queryKey: ["budget"],
-      queryFn: getBudgetDataForCurrentMonth,
-    });
+    // const { data, isLoading, isError } = useQuery({
+    //   queryKey: ["budget"],
+    //   queryFn: getBudgetDataForCurrentMonth,
+    // });
+
+  const { budgetData,isLoading,isError } = useBudget();
+
      if (isLoading) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -44,8 +47,8 @@ const AccountsOverview = () => {
     );
   }
 
-    const { data_raw} = data || {};
-    console.log('data_rawme',data_raw)
+    const data_raw = budgetData?.data_raw ?? [];
+    console.log('data_rawme', data_raw)
 
   const getAccountColor = (type: string, balance: number) => {
     if (type === 'credit' || balance < 0) {
@@ -70,11 +73,11 @@ const AccountsOverview = () => {
       <h3 className={`text-lg font-semibold mb-6 ${
         state.user.theme === 'dark' ? 'text-white' : 'text-gray-900'
       }`}>
-        Accounts Overview
+        Budgets Overview
       </h3>
 
       <div className="space-y-4">
-        {data_raw.map((account) => {
+        {data_raw.map((account:budget_entry) => {
           const Icon = getAccountIcon(account.category);
           return (
             <div key={account.id} className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-700">

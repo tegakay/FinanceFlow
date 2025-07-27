@@ -3,6 +3,7 @@ import { X, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import { Transaction } from '../../types'; 
 import { useTransactions } from '../../hooks/useTransaction';
+import toast from "react-hot-toast";
 
 interface AddTransactionModalProps {
   isOpen: boolean;
@@ -57,36 +58,39 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
         accountId: state.accounts[0]?.id || '',
         date: new Date().toISOString().split('T')[0]
       })
+      onClose();
+      toast.success("Transaction added successfully!");
 
     } catch (error) {
       console.log('Error adding transaction:', error);
+      toast.error("Failed to add transaction. Please try again.");
     }
 
 
     
 
-    dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });
+    // dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });
 
     // Update account balance
-    const account = state.accounts.find(acc => acc.id === formData.accountId);
-    if (account) {
-      const updatedAccount = {
-        ...account,
-        balance: account.balance + newTransaction.amount
-      };
-      dispatch({ type: 'UPDATE_ACCOUNT', payload: updatedAccount });
-    }
+    // const account = state.accounts.find(acc => acc.id === formData.accountId);
+    // if (account) {
+    //   const updatedAccount = {
+    //     ...account,
+    //     balance: account.balance + newTransaction.amount
+    //   };
+    //   dispatch({ type: 'UPDATE_ACCOUNT', payload: updatedAccount });
+    // }
 
-    // Reset form and close modal
-    setFormData({
-      description: '',
-      amount: '',
-      category: '',
-      type: 'Expense',
-      accountId: state.accounts[0]?.id || '',
-      date: new Date().toISOString().split('T')[0]
-    });
-    onClose();
+    // // Reset form and close modal
+    // setFormData({
+    //   description: '',
+    //   amount: '',
+    //   category: '',
+    //   type: 'Expense',
+    //   accountId: state.accounts[0]?.id || '',
+    //   date: new Date().toISOString().split('T')[0]
+    // });
+    // onClose();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, TrendingUp, ArrowRight, Check } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import toast from "react-hot-toast";
 
 interface SignupPageProps {
   onSignup?: () => void;
@@ -33,13 +34,19 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSignup }) => {
         data:{
         'first_name': formData.firstName,
         'last_name': formData.lastName,
+        'email': formData.email,
       }
       }
       const result = await signUp(formData.email, formData.password,signupDetails);
+     
 
-      if (result?.success) {
+      if (result?.data?.session) {
+        toast.success("Account created successfully!");
         navigate('/dashboard')
 
+      }
+      else {
+        toast.error("Signup failed. "+ result?.error?.message || "Please try again later.");
       }
 
     } catch (error) {

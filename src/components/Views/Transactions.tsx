@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Search, Filter, Plus, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import AddTransactionModal from '../Modals/AddTransactionModal';
-import { fetchTransactions } from '../../services/Transactions/transactions';
-import { useQuery } from "@tanstack/react-query";
-import { Transaction } from '../../types';
 import { useTransactions } from '../../hooks/useTransaction';
 
 const Transactions = () => {

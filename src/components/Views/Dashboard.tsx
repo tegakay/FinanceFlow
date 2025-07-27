@@ -7,12 +7,12 @@ import { useUser } from '../../hooks/useUser';
 const Dashboard = () => {
 
   const { userData } = useUser();
-  console.log("User Data:", userData);
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Welcome back{`, ${userData?.first_name}`} 👋
+          Welcome back{userData && `, ${userData?.first_name}`} 👋
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
           Here's your financial overview for this month.
