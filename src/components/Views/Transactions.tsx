@@ -10,8 +10,9 @@ const Transactions = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const categories = ['all', ...Array.from(new Set(state.transactions.map(t => t.category)))];
+  // const categories = ['all', ...Array.from(new Set(state.transactions.map(t => t.category)))];
   const { transactions,isLoading,isError } = useTransactions();
+  console.log('transactions', transactions);
 
   
   const data = transactions
@@ -31,10 +32,12 @@ const Transactions = () => {
       </div>
     );
   }
+  const categories = ['all', ...Array.from(new Set(data ?? [].map(t => t.category)))];
+  console.log('categories', categories);
 
   const filteredTransactions = data?.filter(transaction => {
-    const matchesSearch = transaction.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || transaction.category === selectedCategory;
+    const matchesSearch = transaction.category.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All Categories' || transaction.category === selectedCategory || selectedCategory === 'all';
     return matchesSearch && matchesCategory;
   });
 
@@ -57,7 +60,7 @@ const Transactions = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className={`text-2xl font-bold  dark:text-white mb-2 ${state.user.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
             Transactions
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -102,8 +105,8 @@ const Transactions = () => {
                 }`}
             >
               {categories.map(category => (
-                <option key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
+                <option key={category === 'all'?'all':category.id} value={category.category}>
+                  {category === 'all' ? 'All Categories' : category.category}
                 </option>
               ))}
             </select>

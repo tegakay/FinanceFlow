@@ -11,12 +11,14 @@ export interface Transaction {
 
 export interface User {
   id: string;
-  first_name: string;
-  last_name: string;
+  first_name?: string;
+  last_name?: string;
   avatar_url?: string;
-  email: string;
+  email?: string;
   created_at?: string;
   updated_at?: string;
+  theme?: string; // 'light' | 'dark'
+  currency?: string; // 'USD' | 'EUR' | etc.
 }
 
 export interface budget_entry {
@@ -81,9 +83,9 @@ export interface Goal {
   status?: "active" | "paused" | "cancelled" | "completed";
 }
 
-export interface User {
-  name: string;
-  email: string;
-  currency: string;
-  theme: "light" | "dark";
-}
+// export interface User {
+//   name: string;
+//   email: string;
+//   currency: string;
+//   theme: "light" | "dark";
+// }

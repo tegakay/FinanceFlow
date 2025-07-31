@@ -1,17 +1,12 @@
 
-import { User, Mail, DollarSign, Bell, Shield, Settings, Plus } from 'lucide-react';
+import { User, Mail, DollarSign, Plus } from 'lucide-react';
 import { useFinance } from '../../contexts/FinanceContext';
 import { useUser } from '../../hooks/useUser';
-import { useState } from 'react';
 
 
 const Profile = () => {
   const { state } = useFinance();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-  });
+
 
   const { userData: data, isLoading, isError } = useUser();
   console.log('User Data:', data);
@@ -51,7 +46,8 @@ const Profile = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className={`text-2xl font-bold dark:text-white mb-2  ${state.user.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+         
           Profile Settings
         </h1>
         <p className="text-gray-600 dark:text-gray-400">

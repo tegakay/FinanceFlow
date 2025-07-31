@@ -11,13 +11,13 @@ interface AddTransactionModalProps {
 }
 
 const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClose }) => {
-  const { state, dispatch } = useFinance();
+  const { state } = useFinance();
   const [formData, setFormData] = useState({
     description: '',
     amount: '',
     category: '',
     type: 'Expense' as 'Income' | 'Expense',
-    accountId: state.accounts[0]?.id || '',
+    accountId: '',
     date: new Date().toISOString().split('T')[0]
   });
 
@@ -25,8 +25,7 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
   
 
   const categories = [
-    'Food', 'Transportation', 'Utilities', 'Entertainment', 'Shopping',
-    'Healthcare', 'Education', 'Travel', 'Salary', 'Investments', 'Other'
+    'Food', 'Transportation', 'Utilities', 'Entertainment'
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,7 +54,7 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
         amount: '',
         category: '',
         type: 'Expense' as 'Income' | 'Expense',
-        accountId: state.accounts[0]?.id || '',
+        accountId: '',
         date: new Date().toISOString().split('T')[0]
       })
       onClose();

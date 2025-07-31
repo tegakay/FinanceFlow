@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
-import { Transaction, Account, Budget, Investment, Goal, User } from '../types';
+import { Transaction, Account,  Goal, User } from '../types';
 
 interface FinanceState {
   user: User;
@@ -19,11 +19,10 @@ type FinanceAction =
   | { type: 'LOAD_DATA'; payload: Partial<FinanceState> };
 
 const initialState: FinanceState = {
-  user: { 
-    name: 'Alex Johnson', 
-    email: 'alex.johnson@email.com', 
+  user: {
+    theme: 'light',
+    id:'',
     currency: 'USD',
-    theme: 'light'
   },
   accounts: [
     { id: '1', name: 'Primary Checking', type: 'checking', balance: 12450.75, currency: 'USD' },
@@ -31,14 +30,14 @@ const initialState: FinanceState = {
     { id: '3', name: 'Investment Portfolio', type: 'investment', balance: 42150.25, currency: 'USD' },
     { id: '4', name: 'Credit Card', type: 'credit', balance: -1250.30, currency: 'USD' }
   ],
-  transactions: [
-    { id: '1', description: 'Salary Deposit', amount: 5500.00, category: 'Salary', date: '2024-01-15', type: 'Income', accountId: '1' },
-    { id: '2', description: 'Grocery Shopping', amount: -145.50, category: 'Food', date: '2024-01-14', type: 'Expense', accountId: '1' },
-    { id: '3', description: 'Investment Dividend', amount: 125.75, category: 'Investments', date: '2024-01-13', type: 'Income', accountId: '3' },
-    { id: '4', description: 'Electric Bill', amount: -89.25, category: 'Utilities', date: '2024-01-12', type: 'Expense', accountId: '1' },
-    { id: '5', description: 'Gas Station', amount: -45.00, category: 'Transportation', date: '2024-01-11', type: 'Expense', accountId: '4' },
-    { id: '6', description: 'Restaurant', amount: -78.90, category: 'Food', date: '2024-01-10', type: 'Expense', accountId: '4' }
-  ],
+  // transactions: [
+  //   { id: '1', description: 'Salary Deposit', amount: 5500.00, category: 'Salary', date: '2024-01-15', type: 'Income', accountId: '1' },
+  //   { id: '2', description: 'Grocery Shopping', amount: -145.50, category: 'Food', date: '2024-01-14', type: 'Expense', accountId: '1' },
+  //   { id: '3', description: 'Investment Dividend', amount: 125.75, category: 'Investments', date: '2024-01-13', type: 'Income', accountId: '3' },
+  //   { id: '4', description: 'Electric Bill', amount: -89.25, category: 'Utilities', date: '2024-01-12', type: 'Expense', accountId: '1' },
+  //   { id: '5', description: 'Gas Station', amount: -45.00, category: 'Transportation', date: '2024-01-11', type: 'Expense', accountId: '4' },
+  //   { id: '6', description: 'Restaurant', amount: -78.90, category: 'Food', date: '2024-01-10', type: 'Expense', accountId: '4' }
+  // ],
   // budgets: [
   //   { id: '1', category: 'Food', allocated: 800, spent: 224.40, period: 'monthly' },
   //   { id: '2', category: 'Transportation', allocated: 400, spent: 45.00, period: 'monthly' },
