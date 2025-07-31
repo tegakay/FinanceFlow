@@ -197,12 +197,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 />
                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
               </label>
-              <button
+              {/* <button
                 type="button"
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
                 Forgot password?
-              </button>
+              </button> */}
             </div>
 
             <button
@@ -233,7 +233,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </p>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-gray-200">
+          {/* <div className="mt-8 pt-6 border-t border-gray-200">
             <div className="text-center">
               <p className="text-xs text-gray-500 mb-4">Or continue with</p>
               <div className="grid grid-cols-2 gap-3">
@@ -254,7 +254,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

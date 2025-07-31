@@ -19,7 +19,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
   const navigate = useNavigate();
   const { signUp } = useAuth();
 
@@ -238,7 +238,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSignup }) => {
               )}
             </div>
 
-            <div className="flex items-start space-x-3">
+            {/* <div className="flex items-start space-x-3">
               <div className="flex items-center h-5">
                 <input
                   type="checkbox"
@@ -259,7 +259,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSignup }) => {
                   </button>
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <button
               type="submit"
