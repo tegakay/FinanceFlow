@@ -7,11 +7,11 @@ import Layout from './components/Layout/Layout';
 import Dashboard from './components/Views/Dashboard';
 import Transactions from './components/Views/Transactions';
 import Budget from './components/Views/Budget';
-import Investments from './components/Views/Investments';
 import Goals from './components/Views/Goals';
 import Profile from './components/Views/Profile';
 import { useAuth } from './contexts/AuthContext';
 import { Toaster } from "react-hot-toast";
+import NotFound from './components/Views/NotFound';
 
 const AuthenticatedApp = () => {
   return (
@@ -21,11 +21,11 @@ const AuthenticatedApp = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/budget" element={<Budget />} />
-          <Route path="/investments" element={<Investments />} />
+          {/* <Route path="/investments" element={<Investments />} /> */}
           <Route path="/goals" element={<Goals />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </Layout>
     </FinanceProvider>

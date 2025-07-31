@@ -8,7 +8,7 @@ interface LoginPageProps {
   onLogin?: () => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC<LoginPageProps> = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''

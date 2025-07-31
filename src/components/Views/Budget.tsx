@@ -26,12 +26,12 @@ const Budget = () => {
     return 'bg-green-500';
   };
 
-  const getProgressColorLight = (spent: number, allocated: number) => {
-    const percentage = (spent / allocated) * 100;
-    if (percentage >= 90) return 'bg-red-100 dark:bg-red-900';
-    if (percentage >= 75) return 'bg-yellow-100 dark:bg-yellow-900';
-    return 'bg-green-100 dark:bg-green-900';
-  };
+  // const getProgressColorLight = (spent: number, allocated: number) => {
+  //   const percentage = (spent / allocated) * 100;
+  //   if (percentage >= 90) return 'bg-red-100 dark:bg-red-900';
+  //   if (percentage >= 75) return 'bg-yellow-100 dark:bg-yellow-900';
+  //   return 'bg-green-100 dark:bg-green-900';
+  // };
 
 
   // const { data, isLoading, isError } = useQuery({

@@ -1,5 +1,4 @@
 
-import { Transaction } from '../../types';
 import { supabase } from '../../libs/supabaseClient';
 import { fetchTransactions } from '../Transactions/transactions';
 import { getBudgetSummary } from '../Budgets/budgets';

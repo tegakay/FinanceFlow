@@ -87,7 +87,7 @@ export async function getBudgetDataForCurrentMonth() {
 
   try {
     const userId = (await supabase.auth.getUser()).data.user?.id;
-    const { data, error } = await supabase.rpc("sum_transactions_by_category", {
+    const { data } = await supabase.rpc("sum_transactions_by_category", {
       uid: userId,
     });
     console.log("Sum by category:", data);

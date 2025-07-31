@@ -80,7 +80,7 @@ const Goals = () => {
       totalTargetAmount,
     };
   }
-  let goal_info = sumGoals(goalsData);
+  let goal_info = sumGoals(goalsData ?? []);
 
   return (
     <div className="space-y-6">

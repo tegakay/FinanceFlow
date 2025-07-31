@@ -8,7 +8,7 @@ interface SignupPageProps {
   onSignup?: () => void;
 }
 
-const SignupPage: React.FC<SignupPageProps> = ({ onSignup }) => {
+const SignupPage: React.FC<SignupPageProps> = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',

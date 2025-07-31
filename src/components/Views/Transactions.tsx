@@ -32,7 +32,7 @@ const Transactions = () => {
       </div>
     );
   }
-  const categories = ['all', ...Array.from(new Set(data ?? [].map(t => t.category)))];
+  const categories = ['all', ...Array.from(new Set(data ?? [].map((t:any) => t.category)))];
   console.log('categories', categories);
 
   const filteredTransactions = data?.filter(transaction => {
